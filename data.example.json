@@ -1,3 +1,21 @@
 {
-  "quests": []
+  "quests": [
+    {
+      "id": 1,
+      "title": "Quest",
+      "effort": 4,
+      "cadence": { "kind": "once" },
+      "status": "active",
+      "createdAt": "2026-01-11T12:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "title": "Ritual",
+      "effort": 3,
+      "cadence": { "kind": "daily" },
+      "status": "active",
+      "createdAt": "2026-01-12T08:00:00.000Z"
+    }
+  ],
+  "completions": []
 }
