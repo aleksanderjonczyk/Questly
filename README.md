@@ -1,6 +1,6 @@
 # Questly
 
-## Questly is an app where you could set recurring tasks called Rituals as well as one-time tasks called Quests.
+#### Questly is an app where you could set recurring tasks called Rituals as well as one-time tasks called Quests.
 
 ### MVP
 
