@@ -1,33 +1,32 @@
 /// IMPORTS
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // IMPORT PAGES
-import Homepage from "./pages/Homepage";
-import Product from "./pages/Product";
-import Login from "./pages/Login";
+import HomePage from "./pages/Homepage";
+import ProductPage from "./pages/ProductPage";
+import LoginPage from "./pages/LoginPage";
 import AppLayout from "./pages/AppLayout";
 import PageNotFound from "./pages/PageNotFound";
-// IMPORT COMPONENTS
-import Today from "./components/Today";
-import QuestsList from "./components/QuestsList";
-import History from "./components/History";
-import Retired from "./components/Retired";
-import Settings from "./components/Settings";
-import Stats from "./components/Stats";
+import TodayPage from "./pages/TodayPage";
+import QuestsPage from "./pages/QuestsPage";
+import HistoryPage from "./pages/HistoryPage";
+import RetiredPage from "./pages/RetiredPage";
+import SettingsPage from "./pages/SettingsPage";
+import StatsPage from "./pages/StatsPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Homepage />} />
-        <Route path="product" element={<Product />} />
-        <Route path="login" element={<Login />} />
+        <Route index element={<HomePage />} />
+        <Route path="product" element={<ProductPage />} />
+        <Route path="login" element={<LoginPage />} />
         <Route path="app" element={<AppLayout />}>
-          <Route path="today-list" element={<Today />} />
-          <Route path="quests-list" element={<QuestsList />} />
-          <Route path="history" element={<History />} />
-          <Route path="retired" element={<Retired />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="stats" element={<Stats />} />
+          <Route path="today-list" element={<TodayPage />} />
+          <Route path="quests-list" element={<QuestsPage />} />
+          <Route path="history" element={<HistoryPage />} />
+          <Route path="retired" element={<RetiredPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+          <Route path="stats" element={<StatsPage />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
