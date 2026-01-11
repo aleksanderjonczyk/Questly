@@ -1,3 +1,4 @@
+@use "../abstracts/variables";
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap");
 // <weight>: Use a value from 300 to 700
 // <uniquifier>: Use a unique and descriptive class name
@@ -17,6 +18,7 @@
 // }
 
 body {
-  font-family: $playfair-font;
+  font-family: variables.$playfair-font;
   background-color: #131015;
+  color: aliceblue;
 }
