@@ -1,0 +1,60 @@
+.quest-card {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem 2rem;
+  border: 1px solid #0d0d0d;
+  background-color: #2d2d2d;
+  border-radius: 0.2rem;
+  margin-bottom: 2rem;
+  gap: 1rem;
+
+  &__checkbox {
+    margin-top: 0.2rem;
+    background-color: transparent;
+    border: 1px solid #b9b9b9;
+    border-radius: 100%;
+    padding: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    & svg {
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.2s ease;
+    }
+
+    &:hover svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    &:active svg {
+      transform: scale(0.9);
+    }
+  }
+
+  &__box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__xp {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

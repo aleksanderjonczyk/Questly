@@ -14,7 +14,7 @@ export default function QuestList() {
     load();
   }, []);
   return (
-    <div>
+    <div className="quest-list">
       {quests.map((quest) => (
         <QuestCard quest={quest} key={quest.id} />
       ))}
