@@ -13,18 +13,20 @@ export default function QuestForm() {
     (cadence !== "custom" || Number(interval) >= 2);
   return (
     <div>
-      <form>
+      <form className="quest-form">
         <div>
           <input
+            className="quest-form__title"
             type="text"
             placeholder="Name your Quest"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        <div>
-          <div>
+        <div className="quest-form__footer">
+          <div className="quest-form__options">
             <select
+              className="option"
               aria-label="Effort"
               value={effort}
               onChange={(e) => setEffort(e.target.value)}
@@ -39,6 +41,9 @@ export default function QuestForm() {
               <option value={"5"}>Brutal</option>
             </select>
             <button
+              className={`${
+                isRitual ? "quest-form__ritual--active" : ""
+              } quest-form__ritual option`}
               type="button"
               aria-pressed={isRitual}
               onClick={() => {
@@ -51,6 +56,7 @@ export default function QuestForm() {
             </button>
             {isRitual && (
               <select
+                className="option"
                 aria-label="cadence"
                 value={cadence}
                 onChange={(e) => setCadence(e.target.value)}
@@ -66,21 +72,28 @@ export default function QuestForm() {
             )}
             {cadence === "custom" && isRitual ? (
               <div>
-                <span>Every</span>
+                <span>Every </span>
                 <input
+                  className="quest-form__interval option"
                   type="number"
                   value={interval}
                   onChange={(e) => setInterval(e.target.value)}
                 />
-                <span>days</span>
+                <span> days</span>
               </div>
             ) : (
               ""
             )}
           </div>
-          <div>
-            <button type="button">Cancel</button>
+          <div className="quest-form__buttons">
             <button
+              type="button"
+              className="quest-form__btn quest-form__btn--cancel"
+            >
+              Cancel
+            </button>
+            <button
+              className="quest-form__btn quest-form__btn--submit"
               type="submit"
               disabled={!canSubmit}
               onSubmit={(e) => e.preventDefault()}

@@ -1,0 +1,73 @@
+.option {
+  border: 1px solid #a3a3a3;
+  border-radius: 1rem;
+  padding: 0.3rem 0.6rem;
+  color: inherit;
+  background-color: transparent;
+}
+.quest-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  border: 1px solid #0d0d0d;
+  background-color: #2d2d2d;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+  gap: 1rem;
+
+  &__title {
+    color: inherit;
+    background-color: transparent;
+    width: 100%;
+    padding-bottom: 0.2rem;
+    border: none;
+    border-bottom: 1px solid #181818;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__options {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__ritual {
+    padding: 0.2rem 1rem;
+    transition: all 0.2s ease-in-out;
+
+    &--active {
+      border: 1.5px solid #fdb140;
+      color: #fdb140;
+    }
+  }
+  &__interval {
+    width: 4rem;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__btn {
+    background-color: #a3a3a3;
+    border: 1px solid #181818;
+    border-radius: 1rem;
+    padding: 0.3rem 0.6rem;
+    color: #0d0d0d;
+
+    &--cancel {
+      background-color: #a3a3a3;
+    }
+
+    &--submit {
+      background-color: #46a433;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 @use "base/_base.scss";
 @use "base/_reset.scss";
 
-@use "pages/quests/components/quest-card";
 @use "pages/quests/components/quest-list";
+@use "pages/quests/components/quest-card";
+@use "pages/quests/components/quest-form";
