@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getQuests } from "../api";
 import QuestCard from "./QuestCard";
 import type { Quest } from "../types";
+import QuestForm from "./QuestForm";
 
 export default function QuestList() {
   const [quests, setQuests] = useState<Quest[]>([]);
@@ -18,6 +19,7 @@ export default function QuestList() {
       {quests.map((quest) => (
         <QuestCard quest={quest} key={quest.id} />
       ))}
+      <QuestForm />
     </div>
   );
 }

@@ -4,8 +4,13 @@ export default function QuestForm() {
   const [title, setTitle] = useState("");
   const [effort, setEffort] = useState("");
   const [isRitual, setIsRitual] = useState(false);
-  const [cadence, setCadence] = useState("");
+  const [cadence, setCadence] = useState("daily");
   const [interval, setInterval] = useState("");
+
+  const canSubmit =
+    title.trim().length > 0 &&
+    effort !== "" &&
+    (cadence !== "custom" || Number(interval) >= 2);
   return (
     <div>
       <form>
@@ -27,16 +32,20 @@ export default function QuestForm() {
               <option value="" disabled>
                 Choose effort
               </option>
-              <option value={1}>Trivial</option>
-              <option value={2}>Easy</option>
-              <option value={3}>Standard</option>
-              <option value={4}>Hard</option>
-              <option value={5}>Brutal</option>
+              <option value={"1"}>Trivial</option>
+              <option value={"2"}>Easy</option>
+              <option value={"3"}>Standard</option>
+              <option value={"4"}>Hard</option>
+              <option value={"5"}>Brutal</option>
             </select>
             <button
               type="button"
               aria-pressed={isRitual}
-              onChange={() => setIsRitual(!isRitual)}
+              onClick={() => {
+                setIsRitual(!isRitual);
+                setCadence("daily");
+                setInterval("2");
+              }}
             >
               Ritual
             </button>
@@ -55,7 +64,7 @@ export default function QuestForm() {
                 <option value="custom">Custom</option>
               </select>
             )}
-            {cadence === "custom" ? (
+            {cadence === "custom" && isRitual ? (
               <div>
                 <span>Every</span>
                 <input
@@ -70,8 +79,14 @@ export default function QuestForm() {
             )}
           </div>
           <div>
-            <button>Cancel</button>
-            <button type="submit">Create Quest/Ritual</button>
+            <button type="button">Cancel</button>
+            <button
+              type="submit"
+              disabled={!canSubmit}
+              onSubmit={(e) => e.preventDefault()}
+            >
+              Create {!isRitual ? "Quest" : "Ritual"}
+            </button>
           </div>
         </div>
       </form>

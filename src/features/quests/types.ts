@@ -11,9 +11,10 @@ export type Quest = {
   effort: 1 | 2 | 3 | 4 | 5;
   cadence: Cadence;
   status: "active" | "retired";
-  createdDate: string;
+  createdAt: string;
   // project: Project;
   // description: string;
+  // scheduled: string;
 };
 
-export type CreateQuest = Omit<Quest, "id">;
+export type NewQuest = Omit<Quest, "id">;
