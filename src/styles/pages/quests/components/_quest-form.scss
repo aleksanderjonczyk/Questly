@@ -68,6 +68,9 @@
 
     &--submit {
       background-color: #46a433;
+      &:disabled {
+        background-color: #7b0000;
+      }
     }
   }
 }
