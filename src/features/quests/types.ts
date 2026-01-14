@@ -6,7 +6,7 @@ export type Cadence =
   | { kind: "custom"; intervalDays: number };
 
 export type Quest = {
-  id: number;
+  id: string;
   title: string;
   effort: 1 | 2 | 3 | 4 | 5;
   cadence: Cadence;

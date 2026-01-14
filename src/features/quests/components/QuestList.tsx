@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getQuests } from "../api";
-import QuestCard from "./QuestCard";
+import { fetchQuests } from "../api";
 import type { Quest } from "../types";
+import QuestCard from "./QuestCard";
 import QuestForm from "./QuestForm";
 
 export default function QuestList() {
@@ -9,17 +9,22 @@ export default function QuestList() {
 
   useEffect(function () {
     async function load() {
-      const data = await getQuests();
+      const data = await fetchQuests();
       setQuests(data);
     }
     load();
   }, []);
+
+  function handleCreatedQuest(newQuest: Quest) {
+    setQuests((quests) => [...quests, newQuest]);
+  }
+
   return (
     <div className="quest-list">
       {quests.map((quest) => (
         <QuestCard quest={quest} key={quest.id} />
       ))}
-      <QuestForm />
+      <QuestForm onCreate={handleCreatedQuest} />
     </div>
   );
 }
