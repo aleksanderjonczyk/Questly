@@ -4,9 +4,28 @@
   padding: 0.3rem 0.6rem;
   color: inherit;
   background-color: transparent;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
-    border-color: #b0b0b0;
+    cursor: pointer;
+  }
+
+  &:nth-child(1) {
+    &:hover,
+    &:focus {
+      border-color: #2bb924;
+      color: #2bb924;
+      outline: none;
+    }
+  }
+
+  &:nth-child(3) {
+    &:hover,
+    &:focus {
+      border-color: #d079e6;
+      color: #d079e6;
+      outline: none;
+    }
   }
 }
 .quest-form {
@@ -43,15 +62,27 @@
 
   &__ritual {
     padding: 0.2rem 1rem;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
-    &--active {
-      border: 1.5px solid #fdb140;
+    &--active,
+    &:hover,
+    &:focus {
+      border-color: #fdb140;
       color: #fdb140;
+      outline: none;
     }
   }
   &__interval {
     width: 4rem;
+
+    transition: all 0.3s ease-in-out;
+
+    &:hover,
+    &:focus {
+      border-color: #79a6e6;
+      color: #79a6e6;
+      outline: none;
+    }
   }
 
   &__buttons {
@@ -65,15 +96,30 @@
     border-radius: 1rem;
     padding: 0.3rem 0.6rem;
     color: #0d0d0d;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+    }
 
     &--cancel {
       background-color: #a3a3a3;
+
+      &:hover {
+        background-color: #d2d2d2;
+      }
     }
 
     &--submit {
       background-color: #46a433;
+
+      &:hover {
+        background-color: #5fda46;
+      }
+
       &:disabled {
-        background-color: #7b0000;
+        background-color: #830b0b;
+        cursor: not-allowed;
       }
     }
   }
