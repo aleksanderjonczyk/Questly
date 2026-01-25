@@ -6,11 +6,11 @@ type FormButtonProps = {
 
 export default function FormButton({ setFormOpen }: FormButtonProps) {
   return (
-    <button onClick={() => setFormOpen(true)}>
-      <span>
+    <button onClick={() => setFormOpen(true)} className="form-button">
+      <span className="form-button__icon">
         <PlusIcon size={12} />
       </span>
-      <span>Create Quest</span>
+      <span className="form-button__text">Create Quest</span>
     </button>
   );
 }
