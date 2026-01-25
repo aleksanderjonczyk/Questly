@@ -123,4 +123,13 @@
       }
     }
   }
+
+  &__container {
+    opacity: 0;
+    pointer-events: none;
+    &--open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
 }
