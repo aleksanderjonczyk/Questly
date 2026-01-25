@@ -4,7 +4,7 @@
   padding: 1rem 2rem;
   border: 1px solid #0d0d0d;
   background-color: #2d2d2d;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
   margin-bottom: 2rem;
   gap: 1rem;
 
@@ -22,7 +22,7 @@
     & svg {
       opacity: 0;
       transform: scale(0.8);
-      transition: all 0.2s ease;
+      transition: all 0.3s ease-in-out;
     }
 
     &:hover svg {

@@ -1,0 +1,43 @@
+.form-button {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: inherit;
+  padding: 0 2rem;
+  transition: all 0.3s ease-in-out;
+
+  &:hover,
+  &:focus {
+    color: #53d4c7;
+
+    & .form-button__icon {
+      border: 1px solid #53d4c7;
+
+      & svg {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+
+  &__icon {
+    border: 1px solid #b9b9b9;
+    border-radius: 100%;
+    padding: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border 0.3s ease-in-out;
+
+    & svg {
+      transform: scale(0.8);
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  &__text {
+    font-size: 1.6rem;
+  }
+}
