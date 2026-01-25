@@ -4,9 +4,15 @@ import type { Cadence, NewQuest, Quest } from "../types";
 
 type QuestFormProps = {
   onCreate: (newQuest: Quest) => void;
+  formOpen: boolean;
+  setFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function QuestForm({ onCreate }: QuestFormProps) {
+export default function QuestForm({
+  onCreate,
+  formOpen,
+  setFormOpen,
+}: QuestFormProps) {
   const [title, setTitle] = useState("");
   const [effort, setEffort] = useState("");
   const [isRitual, setIsRitual] = useState(false);
@@ -51,10 +57,17 @@ export default function QuestForm({ onCreate }: QuestFormProps) {
     const created = await createQuest(newQuest);
     onCreate(created);
     resetState();
+    setFormOpen(false);
   }
 
   return (
-    <div>
+    <div
+      className={
+        formOpen === true
+          ? "quest-form__container--open"
+          : "quest-form__container"
+      }
+    >
       <form className="quest-form" onSubmit={handleSubmit}>
         <div>
           <input
@@ -131,6 +144,7 @@ export default function QuestForm({ onCreate }: QuestFormProps) {
             <button
               type="button"
               className="quest-form__btn quest-form__btn--cancel"
+              onClick={() => setFormOpen(false)}
             >
               Cancel
             </button>

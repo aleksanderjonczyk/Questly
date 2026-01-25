@@ -3,9 +3,11 @@ import { fetchQuests } from "../api";
 import type { Quest } from "../types";
 import QuestCard from "./QuestCard";
 import QuestForm from "./QuestForm";
+import FormButton from "./FormButton";
 
 export default function QuestList() {
   const [quests, setQuests] = useState<Quest[]>([]);
+  const [formOpen, setFormOpen] = useState(false);
 
   useEffect(function () {
     async function load() {
@@ -24,7 +26,15 @@ export default function QuestList() {
       {quests.map((quest) => (
         <QuestCard quest={quest} key={quest.id} />
       ))}
-      <QuestForm onCreate={handleCreatedQuest} />
+      {formOpen ? (
+        <QuestForm
+          onCreate={handleCreatedQuest}
+          formOpen={formOpen}
+          setFormOpen={setFormOpen}
+        />
+      ) : (
+        <FormButton setFormOpen={setFormOpen} />
+      )}
     </div>
   );
 }
