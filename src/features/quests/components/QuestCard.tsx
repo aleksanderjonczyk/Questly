@@ -1,7 +1,9 @@
 import {
   ArrowsClockwiseIcon,
   CheckIcon,
+  PencilSimpleLineIcon,
   SparkleIcon,
+  XIcon,
 } from "@phosphor-icons/react";
 import type { Quest } from "../types";
 
@@ -30,6 +32,22 @@ export default function QuestCard({ quest }: QuestCardProps) {
             ""
           )}
         </div>
+      </div>
+      <div className="quest-card__options">
+        <button
+          className="quest-card__options-btn"
+          data-tip="Delete"
+          aria-label="Delete quest"
+        >
+          <XIcon size={18} className="quest-card__delete" />
+        </button>
+        <button
+          className="quest-card__options-btn"
+          data-tip="Edit"
+          aria-label="Edit quest"
+        >
+          <PencilSimpleLineIcon size={18} className="quest-card__edit" />
+        </button>
       </div>
     </div>
   );
