@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchQuests } from "../api";
+import { deleteQuest } from "../api";
 import type { Quest } from "../types";
 import QuestCard from "./QuestCard";
 import QuestForm from "./QuestForm";
@@ -21,10 +22,19 @@ export default function QuestList() {
     setQuests((quests) => [...quests, newQuest]);
   }
 
+  async function hanldeDeleteQuest(questID: Quest["id"]) {
+    try {
+      await deleteQuest(questID);
+      setQuests((quests) => quests.filter((quest) => quest.id !== questID));
+    } catch (err) {
+      console.error("Failed to delete quest", err);
+    }
+  }
+
   return (
     <div className="quest-list">
       {quests.map((quest) => (
-        <QuestCard quest={quest} key={quest.id} />
+        <QuestCard quest={quest} key={quest.id} onDelete={hanldeDeleteQuest} />
       ))}
       {formOpen ? (
         <QuestForm

@@ -19,7 +19,14 @@ export async function createQuest(quest: NewQuest): Promise<Quest> {
     },
     body: JSON.stringify(quest),
   });
-  if (!res.ok) throw new Error("Failt to create quest");
+  if (!res.ok) throw new Error("Failed to create quest");
   const data = await res.json();
   return data;
+}
+
+export async function deleteQuest(questID: Quest["id"]): Promise<void> {
+  const res = await fetch(`${URL}/quests/${questID}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Failed to delete quest");
 }

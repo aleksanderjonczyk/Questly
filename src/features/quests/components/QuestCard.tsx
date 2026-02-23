@@ -9,9 +9,10 @@ import type { Quest } from "../types";
 
 type QuestCardProps = {
   quest: Quest;
+  onDelete: (questID: Quest["id"]) => void;
 };
 
-export default function QuestCard({ quest }: QuestCardProps) {
+export default function QuestCard({ quest, onDelete }: QuestCardProps) {
   return (
     <div className="quest-card">
       <button className="quest-card__checkbox">
@@ -38,6 +39,7 @@ export default function QuestCard({ quest }: QuestCardProps) {
           className="quest-card__options-btn"
           data-tip="Delete"
           aria-label="Delete quest"
+          onClick={() => onDelete(quest.id)}
         >
           <XIcon size={18} className="quest-card__delete" />
         </button>
