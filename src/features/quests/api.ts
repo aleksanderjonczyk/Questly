@@ -1,4 +1,4 @@
-import type { NewQuest, Quest } from "./types";
+import type { Completion, NewQuest, Quest, newCompletion } from "./types";
 const URL = "http://localhost:3001";
 
 export async function fetchQuests() {
@@ -29,4 +29,19 @@ export async function deleteQuest(questID: Quest["id"]): Promise<void> {
     method: "DELETE",
   });
   if (!res.ok) throw new Error("Failed to delete quest");
+}
+
+export async function createCompletion(
+  completion: newCompletion,
+): Promise<Completion> {
+  const res = await fetch(`${URL}/completions`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(completion),
+  });
+  if (!res.ok) throw new Error("Failed to complete the quest");
+  const data = await res.json();
+  return data;
 }
