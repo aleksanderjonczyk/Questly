@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchQuests } from "../api";
-import { deleteQuest } from "../api";
-import type { Quest } from "../types";
+import { fetchQuests, deleteQuest, createCompletion } from "../api";
+import {} from "../api";
+import type { newCompletion, Quest } from "../types";
 import QuestCard from "./QuestCard";
 import QuestForm from "./QuestForm";
 import FormButton from "./FormButton";
@@ -31,10 +31,35 @@ export default function QuestList() {
     }
   }
 
+  async function handleCompletion(
+    questID: Quest["id"],
+    effort: Quest["effort"],
+  ) {
+    try {
+      const newCompletion: newCompletion = {
+        questID,
+        timestamp: new Date().toISOString(),
+        xp: effort * 5,
+      };
+
+      const completed = await createCompletion(newCompletion);
+      setQuests((quests) =>
+        quests.filter((quest) => quest.id !== completed.questID),
+      );
+    } catch (err) {
+      console.error("Failed to complete a quest", err);
+    }
+  }
+
   return (
     <div className="quest-list">
       {quests.map((quest) => (
-        <QuestCard quest={quest} key={quest.id} onDelete={hanldeDeleteQuest} />
+        <QuestCard
+          quest={quest}
+          key={quest.id}
+          onDelete={hanldeDeleteQuest}
+          onComplete={handleCompletion}
+        />
       ))}
       {formOpen ? (
         <QuestForm

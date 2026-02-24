@@ -10,12 +10,20 @@ import type { Quest } from "../types";
 type QuestCardProps = {
   quest: Quest;
   onDelete: (questID: Quest["id"]) => void;
+  onComplete: (questID: Quest["id"], effort: Quest["effort"]) => void;
 };
 
-export default function QuestCard({ quest, onDelete }: QuestCardProps) {
+export default function QuestCard({
+  quest,
+  onDelete,
+  onComplete,
+}: QuestCardProps) {
   return (
     <div className="quest-card">
-      <button className="quest-card__checkbox">
+      <button
+        className="quest-card__checkbox"
+        onClick={() => onComplete(quest.id, quest.effort)}
+      >
         <CheckIcon size={12} color="#b9b9b9" weight="bold" />
       </button>
       <div className="quest-card__box">
