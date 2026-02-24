@@ -18,3 +18,12 @@ export type Quest = {
 };
 
 export type NewQuest = Omit<Quest, "id">;
+
+export type Completion = {
+  id: string | number;
+  questID: Quest["id"];
+  timestamp: string;
+  xp: number;
+};
+
+export type newCompletion = Omit<Completion, "id">;
