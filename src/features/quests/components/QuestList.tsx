@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchQuests, deleteQuest, createCompletion } from "../api";
-import {} from "../api";
+import { fetchQuests, deleteQuest, createCompletion, patchQuest } from "../api";
 import type { newCompletion, Quest } from "../types";
 import QuestCard from "./QuestCard";
 import QuestForm from "./QuestForm";
@@ -36,16 +35,18 @@ export default function QuestList() {
     effort: Quest["effort"],
   ) {
     try {
+      const quest = quests.find((q) => q.id === questID);
+      if (!quest) return;
       const newCompletion: newCompletion = {
         questID,
         timestamp: new Date().toISOString(),
         xp: effort * 5,
       };
 
-      const completed = await createCompletion(newCompletion);
-      setQuests((quests) =>
-        quests.filter((quest) => quest.id !== completed.questID),
-      );
+      await createCompletion(newCompletion);
+      if (quest.cadence.kind === "once") {
+        await patchQuest(questID, { status: "retired" });
+      }
     } catch (err) {
       console.error("Failed to complete a quest", err);
     }
