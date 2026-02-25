@@ -31,6 +31,26 @@ export async function deleteQuest(questID: Quest["id"]): Promise<void> {
   if (!res.ok) throw new Error("Failed to delete quest");
 }
 
+export async function patchQuest(
+  questID: Quest["id"],
+  patch: Partial<Omit<Quest, "id">>,
+): Promise<Quest> {
+  const res = await fetch(`${URL}/quests/${questID}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(patch),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to patch quest");
+  }
+
+  const patchedQuest: Quest = await res.json();
+  return patchedQuest;
+}
+
 export async function createCompletion(
   completion: newCompletion,
 ): Promise<Completion> {
