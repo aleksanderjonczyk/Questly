@@ -35,7 +35,7 @@ export default function QuestCard({
             <SparkleIcon size={16} /> {quest.effort * 5} XP
           </p>
 
-          {quest.cadence.kind !== "daily" ? (
+          {quest.cadence.kind !== "once" ? (
             <ArrowsClockwiseIcon size={16} />
           ) : (
             ""

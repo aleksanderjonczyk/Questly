@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
-import { fetchQuests, deleteQuest, createCompletion, patchQuest } from "../api";
-import type { newCompletion, Quest } from "../types";
+import {
+  fetchQuests,
+  deleteQuest,
+  createCompletion,
+  patchQuest,
+  fetchCompletions,
+} from "../api";
+import type { Completion, newCompletion, Quest } from "../types";
 import QuestCard from "./QuestCard";
 import QuestForm from "./QuestForm";
 import FormButton from "./FormButton";
@@ -8,11 +14,37 @@ import FormButton from "./FormButton";
 export default function QuestList() {
   const [quests, setQuests] = useState<Quest[]>([]);
   const [formOpen, setFormOpen] = useState(false);
+  const [completions, setCompletions] = useState<Completion[]>([]);
+
+  const todayKey = new Date().toISOString().slice(0, 10);
+
+  const completedToday = new Set(
+    completions
+      .filter((c) => c.timestamp.slice(0, 10) === todayKey)
+      .map((c) => c.questID),
+  );
+
+  const visibleQuests = quests.filter((q) => {
+    if (q.status !== "active") return false;
+
+    const isRitual = q.cadence.kind !== "once";
+    if (!isRitual) return true;
+
+    return !completedToday.has(q.id);
+  });
 
   useEffect(function () {
     async function load() {
       const data = await fetchQuests();
       setQuests(data);
+    }
+    load();
+  }, []);
+
+  useEffect(function () {
+    async function load() {
+      const data = await fetchCompletions();
+      setCompletions(data);
     }
     load();
   }, []);
@@ -43,9 +75,11 @@ export default function QuestList() {
         xp: effort * 5,
       };
 
-      await createCompletion(newCompletion);
+      const completed = await createCompletion(newCompletion);
+      setCompletions((prev) => [...prev, completed]);
       if (quest.cadence.kind === "once") {
-        await patchQuest(questID, { status: "retired" });
+        const patched = await patchQuest(questID, { status: "retired" });
+        setQuests((prev) => prev.map((q) => (q.id === questID ? patched : q)));
       }
     } catch (err) {
       console.error("Failed to complete a quest", err);
@@ -54,7 +88,7 @@ export default function QuestList() {
 
   return (
     <div className="quest-list">
-      {quests.map((quest) => (
+      {visibleQuests.map((quest) => (
         <QuestCard
           quest={quest}
           key={quest.id}

@@ -51,6 +51,16 @@ export async function patchQuest(
   return patchedQuest;
 }
 
+export async function fetchCompletions() {
+  const res = await fetch(`${URL}/completions`);
+
+  if (!res.ok) throw new Error("Failed to load completions");
+
+  const data = await res.json();
+
+  return data;
+}
+
 export async function createCompletion(
   completion: newCompletion,
 ): Promise<Completion> {
