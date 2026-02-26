@@ -1,3 +1,5 @@
+@use "../../../abstracts/variables";
+
 .quest-card {
   display: flex;
   align-items: flex-start;
@@ -81,7 +83,7 @@
       position: relative;
       border: none;
       background-color: transparent;
-      color: #e2e5e8;
+      color: variables.$font-color;
 
       &::before {
         content: attr(data-tip);
@@ -94,7 +96,7 @@
         transition: 0.2s all ease-in-out;
         border: 1px solid #0d0d0d;
         background-color: #2d2d2d;
-        color: #e2e5e8;
+        color: variables.$font-color;
         padding: 4px 8px;
         border-radius: 6px;
         font-size: 1.2rem;

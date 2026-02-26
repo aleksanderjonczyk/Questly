@@ -9,7 +9,7 @@ import PageNotFound from "./pages/PageNotFound";
 import TodayPage from "./pages/TodayPage";
 import QuestsPage from "./pages/QuestsPage";
 import HistoryPage from "./pages/HistoryPage";
-import RetiredPage from "./pages/RetiredPage";
+import CompletionsPage from "./pages/CompletionsPage";
 import SettingsPage from "./pages/SettingsPage";
 import StatsPage from "./pages/StatsPage";
 
@@ -24,7 +24,7 @@ function App() {
           <Route path="today-list" element={<TodayPage />} />
           <Route path="quests-list" element={<QuestsPage />} />
           <Route path="history" element={<HistoryPage />} />
-          <Route path="retired" element={<RetiredPage />} />
+          <Route path="completions" element={<CompletionsPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="stats" element={<StatsPage />} />
         </Route>
