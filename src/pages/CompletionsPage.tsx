@@ -1,3 +1,9 @@
+import CompletionsList from "../features/completions/components/CompletionsList";
+
 export default function CompletionsPage() {
-  return <div>Completions</div>;
+  return (
+    <div>
+      <CompletionsList />
+    </div>
+  );
 }
