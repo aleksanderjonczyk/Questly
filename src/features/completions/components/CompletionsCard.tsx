@@ -21,8 +21,8 @@ export default function CompletionsCard({
   return (
     <div className="completions-card">
       <div className="completions-card__box">
-        <p className="completions-card__xp">{completion.xp} xp gained</p>
-        <p className="completions-card__title">{title}</p>
+        <p className="completions-card__xp">+{completion.xp} XP</p>
+        <h3 className="completions-card__title">{title}</h3>
       </div>
       <p className="completions-card__date">
         {dateFormat.format(new Date(completion.timestamp))}

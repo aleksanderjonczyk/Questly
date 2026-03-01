@@ -1,0 +1,29 @@
+.completions-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border: 1px solid #0d0d0d;
+  background-color: #2d2d2d;
+  border-radius: 0.2rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #313131;
+  }
+
+  &__box {
+    display: flex;
+    gap: 3rem;
+  }
+
+  &__title {
+    font-size: 1.2rem;
+  }
+
+  &__xp {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+  }
+}
