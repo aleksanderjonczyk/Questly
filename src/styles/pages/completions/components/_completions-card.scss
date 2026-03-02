@@ -1,3 +1,5 @@
+@use "../../../abstracts/variables";
+
 .completions-card {
   display: flex;
   align-items: center;
@@ -11,19 +13,37 @@
 
   &:hover {
     background-color: #313131;
+
+    .completions-card__xp {
+      color: #8870d7;
+    }
   }
 
   &__box {
     display: flex;
+    align-items: center;
     gap: 3rem;
   }
 
   &__title {
     font-size: 1.2rem;
+    border: 1px solid #0d0d0d6d;
+    border-radius: 0.5rem;
+    text-decoration: line-through;
+
+    padding: 0.4rem 0.8rem;
+
+    &-box {
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
   }
 
   &__xp {
     font-size: 1.2rem;
     text-transform: uppercase;
+    transition: all 0.3s ease-in;
   }
 }

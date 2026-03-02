@@ -7,7 +7,9 @@ export default function CompletionsList() {
   const [completions, setCompletions] = useState<Completion[]>([]);
   const [quests, setQuests] = useState<Quest[]>([]);
   const questById = new Map(quests.map((q) => [q.id, q]));
-  //   const todayKey = new Date().toISOString().slice(0, 10);
+  const sortedCompletions = [...completions].sort(
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+  );
   useEffect(function () {
     async function load() {
       const data = await fetchQuests();
@@ -27,14 +29,14 @@ export default function CompletionsList() {
   return (
     <div className="completions-list">
       {completions
-        ? completions.map((completion) => (
+        ? sortedCompletions.map((completion) => (
             <CompletionsCard
               completion={completion}
               key={completion.id}
               questById={questById}
             />
           ))
-        : "Complete quests!"}
+        : "Go complete your first quest to see your completions here!"}
     </div>
   );
 }

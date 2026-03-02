@@ -22,9 +22,11 @@ export default function CompletionsCard({
     <div className="completions-card">
       <div className="completions-card__box">
         <p className="completions-card__xp">+{completion.xp} XP</p>
-        <h3 className="completions-card__title">{title}</h3>
+        <span className="completions-card__title-box">
+          You completed <h3 className="completions-card__title">{title}</h3>
+        </span>
       </div>
-      <p className="completions-card__date">
+      <p className="completions-card__date" data-tip="Date completed">
         {dateFormat.format(new Date(completion.timestamp))}
       </p>
     </div>
