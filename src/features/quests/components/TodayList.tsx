@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   fetchQuests,
   deleteQuest,
@@ -15,23 +15,83 @@ export default function QuestList() {
   const [quests, setQuests] = useState<Quest[]>([]);
   const [formOpen, setFormOpen] = useState(false);
   const [completions, setCompletions] = useState<Completion[]>([]);
+  const lastCompletionByQuest = useMemo(() => {
+    const map = new Map<Quest["id"], Completion>();
 
-  const todayKey = new Date().toISOString().slice(0, 10);
+    for (const c of completions) {
+      const existing = map.get(c.questID);
 
-  const completedToday = new Set(
-    completions
-      .filter((c) => c.timestamp.slice(0, 10) === todayKey)
-      .map((c) => c.questID),
-  );
+      if (!existing || new Date(c.timestamp) > new Date(existing.timestamp)) {
+        map.set(c.questID, c);
+      }
+    }
 
-  const visibleQuests = quests.filter((q) => {
-    if (q.status !== "active") return false;
+    return map;
+  }, [completions]);
 
-    const isRitual = q.cadence.kind !== "once";
-    if (!isRitual) return true;
+  function toDateOnly(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+  function daysBetween(a: Date, b: Date): number {
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const diff = toDateOnly(a).getTime() - toDateOnly(b).getTime();
+    return Math.floor(diff / msPerDay);
+  }
+  function addOneMonthClamped(date: Date): Date {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
 
-    return !completedToday.has(q.id);
-  });
+    const targetMonth = month + 1;
+    const targetDate = new Date(year, targetMonth, 1);
+
+    const lastDayOfTargetMonth = new Date(
+      targetDate.getFullYear(),
+      targetDate.getMonth() + 1,
+      0,
+    ).getDate();
+
+    const clampedDay = Math.min(day, lastDayOfTargetMonth);
+
+    return new Date(
+      targetDate.getFullYear(),
+      targetDate.getMonth(),
+      clampedDay,
+    );
+  }
+
+  function isAvailableToday(quest: Quest): boolean {
+    if (quest.status !== "active") return false;
+
+    const last = lastCompletionByQuest.get(quest.id);
+    if (!last) return true;
+
+    const today = toDateOnly(new Date());
+    const lastDate = toDateOnly(new Date(last.timestamp));
+
+    switch (quest.cadence.kind) {
+      case "once":
+        return true;
+
+      case "daily":
+        return daysBetween(today, lastDate) >= 1;
+
+      case "weekly":
+        return daysBetween(today, lastDate) >= 7;
+
+      case "monthly": {
+        const nextAvailable = addOneMonthClamped(lastDate);
+        return today.getTime() >= nextAvailable.getTime();
+      }
+
+      case "custom":
+        return daysBetween(today, lastDate) >= quest.cadence.intervalDays;
+
+      default:
+        return true;
+    }
+  }
+  const visibleQuests = quests.filter(isAvailableToday);
 
   useEffect(function () {
     async function load() {
