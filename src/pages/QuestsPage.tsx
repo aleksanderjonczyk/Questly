@@ -1,3 +1,9 @@
+import QuestsList from "../features/quests/components/QuestsList";
+
 export default function QuestsPage() {
-  return <div>quests</div>;
+  return (
+    <div>
+      <QuestsList />
+    </div>
+  );
 }

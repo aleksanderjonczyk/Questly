@@ -11,7 +11,7 @@ import QuestCard from "./QuestCard";
 import QuestForm from "./QuestForm";
 import FormButton from "./FormButton";
 
-export default function QuestList() {
+export default function TodayList() {
   const [quests, setQuests] = useState<Quest[]>([]);
   const [formOpen, setFormOpen] = useState(false);
   const [completions, setCompletions] = useState<Completion[]>([]);
