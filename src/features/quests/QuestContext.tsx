@@ -1,7 +1,20 @@
-import { useReducer } from "react";
-import { createContext, useContext, useEffect } from "react";
-import { fetchCompletions, fetchQuests } from "./api";
-import type { Completion, Quest } from "./types";
+import {
+  useReducer,
+  createContext,
+  useContext,
+  useEffect,
+  type ReactNode,
+} from "react";
+
+import {
+  createCompletion,
+  createQuest,
+  deleteQuest,
+  fetchCompletions,
+  fetchQuests,
+  patchQuest,
+} from "./api";
+import type { Completion, newCompletion, NewQuest, Quest } from "./types";
 
 type State = {
   quests: Quest[];
@@ -68,7 +81,26 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-function QuestsProvider({ children }) {
+type QuestsContextType = {
+  quests: Quest[];
+  completions: Completion[];
+  isLoading: boolean;
+  error: string;
+  handleCreateQuest: (quest: NewQuest) => Promise<void>;
+  handleDeleteQuest: (questID: Quest["id"]) => Promise<void>;
+  handleComplete: (
+    questID: Quest["id"],
+    effort: Quest["effort"],
+  ) => Promise<void>;
+  handlePatchQuest: (
+    questID: Quest["id"],
+    patch: Partial<Omit<Quest, "id">>,
+  ) => Promise<void>;
+};
+
+const QuestsContext = createContext<QuestsContextType | null>(null);
+
+export function QuestsProvider({ children }: { children: ReactNode }) {
   const [{ quests, completions, isLoading, error }, dispatch] = useReducer(
     reducer,
     initialState,
@@ -90,4 +122,82 @@ function QuestsProvider({ children }) {
     }
     loadData();
   }, []);
+
+  async function handleCreateQuest(quest: NewQuest) {
+    dispatch({ type: "loading" });
+    try {
+      const created = await createQuest(quest);
+      dispatch({ type: "quest/created", payload: created });
+    } catch {
+      dispatch({ type: "error", payload: "Failed to create quest" });
+    }
+  }
+
+  async function handleDeleteQuest(questID: Quest["id"]) {
+    dispatch({ type: "loading" });
+    try {
+      await deleteQuest(questID);
+      dispatch({ type: "quest/deleted", payload: questID });
+    } catch {
+      dispatch({ type: "error", payload: "Failed to delete quest" });
+    }
+  }
+
+  async function handleComplete(questID: Quest["id"], effort: Quest["effort"]) {
+    dispatch({ type: "loading" });
+    try {
+      const quest = quests.find((q) => q.id === questID);
+      if (!quest) return;
+
+      const completion: newCompletion = {
+        questID,
+        timestamp: new Date().toISOString(),
+        xp: effort * 5,
+      };
+
+      const created = await createCompletion(completion);
+      dispatch({ type: "completion/created", payload: created });
+
+      if (quest.cadence.kind === "once") {
+        const patched = await patchQuest(questID, { status: "retired" });
+        dispatch({ type: "quest/patched", payload: patched });
+      }
+    } catch {
+      dispatch({ type: "error", payload: "Failed to complete quest" });
+    }
+  }
+  async function handlePatchQuest(
+    questID: Quest["id"],
+    patch: Partial<Omit<Quest, "id">>,
+  ) {
+    dispatch({ type: "loading" });
+    try {
+      const patched = await patchQuest(questID, patch);
+      dispatch({ type: "quest/patched", payload: patched });
+    } catch {
+      dispatch({ type: "error", payload: "Failed to patch quest" });
+    }
+  }
+  return (
+    <QuestsContext.Provider
+      value={{
+        quests,
+        completions,
+        isLoading,
+        error,
+        handleCreateQuest,
+        handleDeleteQuest,
+        handleComplete,
+        handlePatchQuest,
+      }}
+    >
+      {children}
+    </QuestsContext.Provider>
+  );
+}
+
+export function useQuests() {
+  const context = useContext(QuestsContext);
+  if (!context) throw new Error("useQuests must be used within QuestsProvider");
+  return context;
 }
