@@ -11,24 +11,27 @@ import QuestsPage from "./pages/QuestsPage";
 import CompletionsPage from "./pages/CompletionsPage";
 import SettingsPage from "./pages/SettingsPage";
 import StatsPage from "./pages/StatsPage";
+import { QuestsProvider } from "./features/quests/QuestContext";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<HomePage />} />
-        <Route path="product" element={<ProductPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="app" element={<AppLayout />}>
-          <Route path="today-list" element={<TodayPage />} />
-          <Route path="quests-list" element={<QuestsPage />} />
-          <Route path="completions" element={<CompletionsPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-          <Route path="stats" element={<StatsPage />} />
-        </Route>
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <QuestsProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path="product" element={<ProductPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="app" element={<AppLayout />}>
+            <Route path="today-list" element={<TodayPage />} />
+            <Route path="quests-list" element={<QuestsPage />} />
+            <Route path="completions" element={<CompletionsPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+            <Route path="stats" element={<StatsPage />} />
+          </Route>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </QuestsProvider>
   );
 }
 

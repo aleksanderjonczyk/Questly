@@ -1,18 +1,14 @@
 import { useState } from "react";
-import { createQuest } from "../api";
-import type { Cadence, NewQuest, Quest } from "../types";
+import type { Cadence, NewQuest } from "../types";
+import { useQuests } from "../QuestContext";
 
 type QuestFormProps = {
-  onCreate: (newQuest: Quest) => void;
   formOpen: boolean;
   setFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function QuestForm({
-  onCreate,
-  formOpen,
-  setFormOpen,
-}: QuestFormProps) {
+export default function QuestForm({ formOpen, setFormOpen }: QuestFormProps) {
+  const { handleCreateQuest } = useQuests();
   const [title, setTitle] = useState("");
   const [effort, setEffort] = useState("");
   const [isRitual, setIsRitual] = useState(false);
@@ -54,8 +50,7 @@ export default function QuestForm({
       createdAt: new Date().toISOString(),
     };
 
-    const created = await createQuest(newQuest);
-    onCreate(created);
+    await handleCreateQuest(newQuest);
     resetState();
     setFormOpen(false);
   }

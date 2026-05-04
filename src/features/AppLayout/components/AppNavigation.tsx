@@ -7,6 +7,9 @@ export default function AppNavigation() {
         Today
       </NavLink>
       <NavLink className="app-navigation__link" to="quests-list">
+        Quests
+      </NavLink>
+      <NavLink className="app-navigation__link" to="aa">
         Upcoming
       </NavLink>
       <NavLink className="app-navigation__link" to="completions">
