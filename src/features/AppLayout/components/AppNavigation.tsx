@@ -9,7 +9,7 @@ export default function AppNavigation() {
       <NavLink className="app-navigation__link" to="quests-list">
         Quests
       </NavLink>
-      <NavLink className="app-navigation__link" to="aa">
+      <NavLink className="app-navigation__link" to="upcoming">
         Upcoming
       </NavLink>
       <NavLink className="app-navigation__link" to="completions">

@@ -4,6 +4,11 @@ import QuestCard from "./QuestCard";
 import QuestForm from "./QuestForm";
 import FormButton from "./FormButton";
 import { useQuests } from "../QuestContext";
+import {
+  toDateOnly,
+  daysBetween,
+  addOneMonthClamped,
+} from "../../utilities/DateUtils";
 
 export default function TodayList() {
   const { quests, completions, handleDeleteQuest, handleComplete } =
@@ -22,37 +27,6 @@ export default function TodayList() {
 
     return map;
   }, [completions]);
-
-  function toDateOnly(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  }
-  function daysBetween(a: Date, b: Date): number {
-    const msPerDay = 1000 * 60 * 60 * 24;
-    const diff = toDateOnly(a).getTime() - toDateOnly(b).getTime();
-    return Math.floor(diff / msPerDay);
-  }
-  function addOneMonthClamped(date: Date): Date {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-
-    const targetMonth = month + 1;
-    const targetDate = new Date(year, targetMonth, 1);
-
-    const lastDayOfTargetMonth = new Date(
-      targetDate.getFullYear(),
-      targetDate.getMonth() + 1,
-      0,
-    ).getDate();
-
-    const clampedDay = Math.min(day, lastDayOfTargetMonth);
-
-    return new Date(
-      targetDate.getFullYear(),
-      targetDate.getMonth(),
-      clampedDay,
-    );
-  }
 
   function isAvailableToday(quest: Quest): boolean {
     if (quest.status !== "active") return false;

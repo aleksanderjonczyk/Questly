@@ -11,18 +11,23 @@ type QuestCardProps = {
   quest: Quest;
   onDelete: (questID: Quest["id"]) => void;
   onComplete: (questID: Quest["id"], effort: Quest["effort"]) => void;
+  disabled?: boolean;
+  sublabel?: string;
 };
 
 export default function QuestCard({
   quest,
   onDelete,
   onComplete,
+  disabled,
+  sublabel,
 }: QuestCardProps) {
   return (
     <div className="quest-card">
       <button
         className="quest-card__checkbox"
         onClick={() => onComplete(quest.id, quest.effort)}
+        disabled={disabled}
       >
         <CheckIcon size={12} color="#b9b9b9" weight="bold" />
       </button>
@@ -34,7 +39,7 @@ export default function QuestCard({
           <p className="quest-card__xp">
             <SparkleIcon size={16} /> {quest.effort * 5} XP
           </p>
-
+          {sublabel && <p className="quest-card__sublabel">{sublabel}</p>}
           {quest.cadence.kind !== "once" ? (
             <ArrowsClockwiseIcon size={16} />
           ) : (
